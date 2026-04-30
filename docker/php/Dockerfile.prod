@@ -16,7 +16,7 @@ RUN composer install \
 
 COPY src/ .
 
-RUN composer dump-autoload --optimize
+RUN composer dump-autoload --optimize --no-scripts
 
 
 # =========================
