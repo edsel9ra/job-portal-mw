@@ -115,7 +115,7 @@ class JobController extends Controller
     public function edit(Job $job)
     {
         return Inertia::render('Recruiter/Jobs/Edit', [
-            'job'      => $job->load('branch:id,name'),
+            'job' => $job->load('branch:id,name'),
             'branches' => Branch::select('id', 'name')->get(),
         ]);
     }
@@ -133,12 +133,23 @@ class JobController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * DELETE /reclutador/ofertas/{job}
+     * Cierra la oferta en lugar de eliminarla.
      */
-    /*public function destroy(string $id)
+    public function destroy(Job $job)
     {
-        //
-    }*/
+        if ($job->applications()->exists()) {
+            return redirect()
+                ->back()
+                ->with('error', 'No puedes eliminar esta oferta porque ya tiene candidatos postulados.');
+        }
+
+        $job->delete();
+
+        return redirect()
+            ->route('reclutador.jobs.index')
+            ->with('success', 'Oferta eliminada correctamente.');
+    }
 
     // ──────────────────────────────────────────────────────────────
     //  ACCIONES AJAX  (Inertia partial / fetch desde el frontend)
@@ -166,12 +177,12 @@ class JobController extends Controller
     public function duplicate(Job $job)
     {
         $copy = $this->service->createJob([
-            'name_job'      => "{$job->getAttribute('name_job')} (Copia)",
-            'description'   => $job->getAttribute('description'),
-            'salary'        => $job->getAttribute('salary'),
-            'status'        => 'Abierta',
+            'name_job' => "{$job->getAttribute('name_job')} (Copia)",
+            'description' => $job->getAttribute('description'),
+            'salary' => $job->getAttribute('salary'),
+            'status' => 'Abierta',
             'contract_type' => $job->getAttribute('contract_type'),
-            'branch_id'     => $job->getAttribute('branch_id'),
+            'branch_id' => $job->getAttribute('branch_id'),
         ]);
 
         return redirect()
