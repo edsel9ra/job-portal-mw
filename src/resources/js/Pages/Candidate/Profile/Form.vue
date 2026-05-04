@@ -6,7 +6,7 @@
                     Perfil del candidato
                 </p>-->
 
-                <h2 class="mt-1 text-xl font-black tracking-tight text-slate-950">
+                <h2 class="mt-1 text-xl font-black uppercase tracking-tight text-slate-950">
                     Completar perfil
                 </h2>
             </div>
