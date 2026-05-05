@@ -30,7 +30,7 @@ function isActive(href) {
 
 <template>
 
-    <Head title="Empleo Mister Wings" />
+    <Head title="Empleos Disponibles" />
 
     <div class="relative flex h-screen overflow-hidden bg-slate-100">
         <!-- Fondo decorativo general -->
