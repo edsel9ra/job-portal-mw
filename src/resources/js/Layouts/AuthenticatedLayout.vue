@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Empleo Mister Wings" />
+    <Head title="Empleos MW" />
 
     <div class="relative flex h-screen overflow-hidden bg-slate-100">
         <!-- Fondos decorativos -->
