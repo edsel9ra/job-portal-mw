@@ -9,7 +9,7 @@ import PrimeVue from 'primevue/config'
 import { ptButton, ptMessage, ptInputText, ptTextarea, ptSelect, ptDialog, ptAutoComplete } from '@/primevue/pt'
 import 'primeicons/primeicons.css'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = 'Portal de Empleo Mister Wings';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
