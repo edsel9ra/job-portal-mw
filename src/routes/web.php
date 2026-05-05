@@ -1,16 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\JobController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn() => Inertia::render('Welcome', [
-    'canLogin' => Route::has('login'),
-    'canRegister' => Route::has('register'),
-    'laravelVersion' => Application::VERSION,
-    'phpVersion' => PHP_VERSION,
-]));
+Route::get('/', [JobController::class, 'publicIndex'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -18,6 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+/* Redirección
 Route::get('/', function () {
     if (auth()->check()) {
         return auth()->user()->isReclutador()
@@ -25,7 +22,7 @@ Route::get('/', function () {
             : redirect()->route('candidato.dashboard');
     }
     return redirect()->route('login');
-});
+});*/
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/jobs.php';
