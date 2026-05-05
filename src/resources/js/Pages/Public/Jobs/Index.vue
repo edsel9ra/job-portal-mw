@@ -59,7 +59,7 @@ function go(page = 1) {
                     Portal de empleo
                 </p>
 
-                <h1 class="mt-1 truncate text-xl font-black text-slate-950">
+                <h1 class="mt-1 truncate text-xl font-black uppercase text-slate-950">
                     Ofertas disponibles
                 </h1>
             </div>
