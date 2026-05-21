@@ -372,6 +372,31 @@
                                     <InfoBox label="Ciudad" :value="modal.profile?.city || 'No registrada'"
                                         class="md:col-span-2" />
                                 </div>
+                                <div class="mt-5 rounded-[2rem] border border-green-100 bg-green-50 p-5 shadow-sm">
+                                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                        <div>
+                                            <p class="text-sm font-black text-slate-900">
+                                                Contactar por WhatsApp
+                                            </p>
+
+                                            <p class="mt-1 text-xs font-medium leading-5 text-slate-500">
+                                                Se abrirá WhatsApp con un mensaje listo para enviar al candidato.
+                                            </p>
+                                        </div>
+
+                                        <a v-if="whatsappUrl" :href="whatsappUrl" target="_blank" rel="noopener noreferrer"
+                                            class="inline-flex items-center justify-center gap-2 rounded-2xl bg-green-600 px-5 py-3 text-sm font-black text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700">
+                                            Enviar WhatsApp
+                                            <span class="material-symbols-outlined text-[18px]">chat</span>
+                                        </a>
+
+                                        <button v-else type="button" disabled
+                                            class="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-slate-200 px-5 py-3 text-sm font-black text-slate-400">
+                                            Sin celular
+                                            <span class="material-symbols-outlined text-[18px]">phone_disabled</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Tab: Curriculum -->
@@ -823,6 +848,32 @@ function formatBirthDate(date) {
 
     return `${day}/${month}/${year}`;
 }
+
+function normalizeWhatsappPhone(phone) {
+    const digits = String(phone ?? '').replace(/\D/g, '');
+
+    if (!digits) return '';
+
+    if (digits.startsWith('57')) return digits;
+
+    if (digits.length === 10) return `57${digits}`;
+
+    return digits;
+}
+
+const whatsappMessage = computed(() => {
+    const candidateName = modal.profile?.user?.name ?? 'candidato';
+
+    return `Hola ${candidateName}, te saludamos del equipo de selección de Mister Wings. Queremos contactarte sobre tu postulación. ¿Tienes disponibilidad para conversar?`;
+});
+
+const whatsappUrl = computed(() => {
+    const phone = normalizeWhatsappPhone(modal.profile?.phone);
+
+    if (!phone) return '';
+
+    return `https://api.whatsapp.com/send/?phone=${phone}&text=${encodeURIComponent(whatsappMessage.value)}&type=phone_number&app_absent=0`;
+});
 
 const STATUS_CONFIG = {
     Aplicado: 'bg-yellow-100 text-yellow-800',
