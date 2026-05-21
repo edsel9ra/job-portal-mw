@@ -62,6 +62,18 @@ services:
       timeout: 3s
       interval: 5s
 
+  phpmyadmin:
+    image: phpmyadmin:5.2.3-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 512M
+    expose:
+      - "80"
+
 volumes:
   db_data:
   laravel_storage:
